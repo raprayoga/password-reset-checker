@@ -10,20 +10,26 @@ const variants: { variant: "default" | "danger"; style: string }[] = [
   { variant: "danger", style: "border-red-400 focus:shadow-red-400" },
 ];
 
+const setup = (props: React.ComponentProps<typeof Input>) => {
+  const utils = render(<Input placeholder={placeholder} {...props} />);
+
+  const inputElement = screen.getByTestId("input-element");
+
+  return { ...utils, inputElement };
+};
+
 describe("Input test", () => {
   test.each(variants)(
     "Should render variant correctly",
     ({ variant, style }) => {
-      render(<Input placeholder={placeholder} variant={variant} />);
+      const { inputElement } = setup({ placeholder, variant });
 
-      const inputElement = screen.getByTestId("input-element");
       expect(inputElement).toHaveClass(style);
     }
   );
 
   test("sould handle input user", () => {
-    render(<Input placeholder={placeholder} />);
-    const inputElement = screen.getByTestId("input-element");
+    const { inputElement } = setup({});
 
     fireEvent.focus(inputElement);
     fireEvent.change(inputElement, {
@@ -32,5 +38,12 @@ describe("Input test", () => {
       },
     });
     expect(inputElement).toHaveValue(inputText);
+  });
+
+  test("sould handle toggle show password", () => {
+    const { inputElement } = setup({});
+
+    fireEvent.click(screen.getByTestId("show-toggle-element"));
+    expect(inputElement).toHaveAttribute("type", "text");
   });
 });
