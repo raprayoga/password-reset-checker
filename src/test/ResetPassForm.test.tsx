@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import ResetPassForm from "./index";
+import ResetPassForm from "@/components/modules/ResetPassForm/index";
 
 const setup = () => {
   const utils = render(<ResetPassForm data-testid="form-element" />);
