@@ -29,7 +29,10 @@ const variants = {
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ variant, value, className, placeholder, ...props }, ref) => {
+  (
+    { variant, value, className, onBlur = () => null, placeholder, ...props },
+    ref
+  ) => {
     const [onFocus, setOnFocus] = useState<boolean>(false);
     const [isShowPass, setIsShowPass] = useState(false);
     const handleToggleShowPass = () => {
@@ -48,7 +51,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
           onFocus={() => setOnFocus(true)}
-          onBlur={() => setOnFocus(false)}
+          onBlur={(e) => {
+            setOnFocus(false);
+            onBlur(e);
+          }}
         />
         <motion.span
           animate={onFocus || value ? "open" : "closed"}
