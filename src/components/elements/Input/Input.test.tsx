@@ -31,7 +31,6 @@ describe("Input test", () => {
   test("sould handle input user", () => {
     const { inputElement } = setup({});
 
-    fireEvent.focus(inputElement);
     fireEvent.change(inputElement, {
       target: {
         value: inputText,

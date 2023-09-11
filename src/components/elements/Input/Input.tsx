@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const inputVariant = cva(
-  "h-full w-full border rounded outline-0 py-2 placeholder:text-gray text-black px-2 pt-4 outline-none",
+  "h-full w-full border rounded outline-0 py-2 placeholder:opacity-0 text-black px-2 pt-4 outline-none",
   {
     variants: {
       variant: {
@@ -29,7 +29,10 @@ const variants = {
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ variant, value, className, placeholder, ...props }, ref) => {
+  (
+    { variant, value, className, onBlur = () => null, placeholder, ...props },
+    ref
+  ) => {
     const [onFocus, setOnFocus] = useState<boolean>(false);
     const [isShowPass, setIsShowPass] = useState(false);
     const handleToggleShowPass = () => {
@@ -48,7 +51,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
           onFocus={() => setOnFocus(true)}
-          onBlur={() => setOnFocus(false)}
+          placeholder={placeholder}
+          onBlur={(e) => {
+            setOnFocus(false);
+            onBlur(e);
+          }}
         />
         <motion.span
           animate={onFocus || value ? "open" : "closed"}
