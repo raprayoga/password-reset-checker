@@ -4,7 +4,7 @@ import useInput from "@/hooks/use-input";
 import useStrengthCheck from "@/hooks/use-strength-check";
 
 export interface ResetPassFormProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+  extends React.HTMLAttributes<HTMLFormElement> {}
 
 function ResetPassForm({ ...props }: ResetPassFormProps) {
   const isNotEmpty = (value: string) => {
@@ -35,54 +35,56 @@ function ResetPassForm({ ...props }: ResetPassFormProps) {
 
   const { level, checker } = useStrengthCheck();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!passwordNotValid && !passwordConfNotValid) console.log("on submit");
   };
 
   return (
-    <div className="w-[500px] p-8 rounded-lg shadow-md" {...props}>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <Input
-            placeholder="Password"
-            onChange={(e) => {
-              passwordValueChangeHandler(e);
-              checker(e);
-            }}
-            onBlur={passwordValueBlurHandler}
-            value={passwordValue}
-            variant={passwordNotValid ? "danger" : "default"}
-          />
-          <span className="text-[10px] text-red-500 float-right">
-            {passwordNotValid && `${passwordValueHasError[0]}`}
-          </span>
-        </div>
-        <div className="mt-8">
-          <Input
-            placeholder="Password"
-            onChange={passwordConfValueChangeHandler}
-            onBlur={passwordConfValueBlurHandler}
-            value={passwordConfValue}
-            variant={passwordConfNotValid ? "danger" : "default"}
-          />
-          <span className="text-[10px] text-red-500 float-right">
-            {passwordConfNotValid && `${passwordConfValueHasError[0]}`}
-          </span>
-        </div>
+    <form
+      onSubmit={handleSubmit}
+      className="w-[500px] p-8 rounded-lg shadow-md"
+      {...props}
+    >
+      <div>
+        <Input
+          placeholder="Password"
+          onChange={(e) => {
+            passwordValueChangeHandler(e);
+            checker(e);
+          }}
+          onBlur={passwordValueBlurHandler}
+          value={passwordValue}
+          variant={passwordNotValid ? "danger" : "default"}
+        />
+        <span className="text-[10px] text-red-500 float-right">
+          {passwordNotValid && `${passwordValueHasError[0]}`}
+        </span>
+      </div>
+      <div className="mt-8">
+        <Input
+          placeholder="Password Confirm"
+          onChange={passwordConfValueChangeHandler}
+          onBlur={passwordConfValueBlurHandler}
+          value={passwordConfValue}
+          variant={passwordConfNotValid ? "danger" : "default"}
+        />
+        <span className="text-[10px] text-red-500 float-right">
+          {passwordConfNotValid && `${passwordConfValueHasError[0]}`}
+        </span>
+      </div>
 
-        <div className="mt-5">
-          <p className="font-bold text-sm">Strength</p>
-          <StrengthMeter variant={level} />
-        </div>
+      <div className="mt-5">
+        <p className="font-bold text-sm">Strength</p>
+        <StrengthMeter data-testid="strength-meter-element" variant={level} />
+      </div>
 
-        <div className="mt-10">
-          <button className="py-2 px-4 text-center rounded-lg bg-blue-500 w-full text-sm text-white hover:opacity-90 transition-all duration-300">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      <div className="mt-10">
+        <button className="py-2 px-4 text-center rounded-lg bg-blue-500 w-full text-sm text-white hover:opacity-90 transition-all duration-300">
+          Submit
+        </button>
+      </div>
+    </form>
   );
 }
 

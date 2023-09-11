@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const inputVariant = cva(
-  "h-full w-full border rounded outline-0 py-2 placeholder:text-gray text-black px-2 pt-4 outline-none",
+  "h-full w-full border rounded outline-0 py-2 placeholder:opacity-0 text-black px-2 pt-4 outline-none",
   {
     variants: {
       variant: {
@@ -51,6 +51,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
           onFocus={() => setOnFocus(true)}
+          placeholder={placeholder}
           onBlur={(e) => {
             setOnFocus(false);
             onBlur(e);
