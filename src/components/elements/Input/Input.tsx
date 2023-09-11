@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
@@ -27,7 +27,7 @@ const variants = {
   closed: { y: "-50%", x: 0, scale: 1 },
 };
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ variant, value, placeholder, ...props }, ref) => {
     const [onFocus, setOnFocus] = useState<boolean>(false);
 
