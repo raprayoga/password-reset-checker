@@ -43,7 +43,7 @@ function ResetPassForm({ ...props }: ResetPassFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[500px] p-8 rounded-lg shadow-md"
+      className="p-8 rounded-lg shadow-md"
       {...props}
     >
       <div>
