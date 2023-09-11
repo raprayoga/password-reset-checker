@@ -29,7 +29,7 @@ const variants = {
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ variant, value, placeholder, ...props }, ref) => {
+  ({ variant, value, className, placeholder, ...props }, ref) => {
     const [onFocus, setOnFocus] = useState<boolean>(false);
     const [isShowPass, setIsShowPass] = useState(false);
     const handleToggleShowPass = () => {
@@ -42,7 +42,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="relative w-full h-full">
         <input
           type={isShowPass ? "text" : "password"}
-          className={cn(inputVariant({ variant }), props.className)}
+          className={cn(inputVariant({ variant }), className)}
           data-testid="input-element"
           value={value}
           ref={ref}
