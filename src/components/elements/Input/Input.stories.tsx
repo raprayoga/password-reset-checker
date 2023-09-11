@@ -6,7 +6,7 @@ export default {
   tags: ["autodocs"],
 };
 
-const StoryComponent = ({ variant }: { variant: string }) => {
+const StoryComponent = ({ variant }: { variant?: "default" | "danger" }) => {
   const [value, setValue] = useState<string>("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,4 +26,8 @@ const StoryComponent = ({ variant }: { variant: string }) => {
 
 export const Default = () => {
   return <StoryComponent variant="default" />;
+};
+
+export const Danger = () => {
+  return <StoryComponent variant="danger" />;
 };

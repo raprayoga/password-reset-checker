@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+
+const inputVariant = cva(
+  "h-full w-full border rounded outline-0 py-2 placeholder:text-gray text-black px-2 pt-4 outline-none",
+  {
+    variants: {
+      variant: {
+        default: "border-gray focus:shadow-gray",
+        danger: "border-red-400 focus:shadow-red-400",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+);
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  variant?: string;
-}
-
-export interface PlaceHolderProps {
-  isOnFocus: boolean;
-  value: string | number | readonly string[] | undefined;
-}
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputVariant> {}
 
 const variants = {
   open: { y: "-130%", x: "-20%", scale: 0.7 },
@@ -17,13 +28,13 @@ const variants = {
 };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ value, placeholder, ...props }, ref) => {
+  ({ variant, value, placeholder, ...props }, ref) => {
     const [onFocus, setOnFocus] = useState<boolean>(false);
 
     return (
       <div className="relative w-full h-full">
         <input
-          className="h-full w-full border rounded outline-0 py-2 placeholder:text-gray text-black px-2 pt-4 outline-none"
+          className={cn(inputVariant({ variant }), props.className)}
           data-testid="input-element"
           value={value}
           ref={ref}
